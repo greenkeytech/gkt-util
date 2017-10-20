@@ -22,7 +22,9 @@ describe('#validEmail', () => {
      '@TEST.com',
      'Test.com',
      'test.Pers  on10100100@somesite.net',
-     'test.fun@mysite...com'
+     'test.fun@mysite...com',
+     'fun@fun',
+     '@test'
     ];
     invalidEmails.forEach((email) => {
       return validEmail(email).should.equal(false);
