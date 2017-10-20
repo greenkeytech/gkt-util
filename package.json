@@ -1,0 +1,15 @@
+{
+  "name": "@ashley_greenkey/util",
+  "version": "0.1.0",
+  "description": "this is a test",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Ashley Shultz <ashley@greenkeytech.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1"
+  }
+}
