@@ -1,6 +1,6 @@
 {
-  "name": "@ashley_greenkey/util",
-  "version": "0.1.0",
+  "name": "@greenkey/util",
+  "version": "0.1.01",
   "description": "this is a test",
   "main": "index.js",
   "scripts": {

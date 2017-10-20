@@ -9,7 +9,7 @@ describe('#validEmail', () => {
      'test@test.com',
      'TEST@TEST.com',
      'Test.Person@testing.com',
-     'test.Person10100100@somesite.net',
+     'test.Person10100100@somesite.net'
     ];
     validEmails.forEach((email) => {
       return validEmail(email).should.equal(true);
