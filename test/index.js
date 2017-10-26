@@ -1,7 +1,5 @@
-var should = require('chai').should(),
-    util = require('../index'),
-    validEmail = util.validEmail;
-    validPassword = util.validPassword;
+var should = require('chai').should();
+const { validEmail, validPassword, containsNumbers, containsSpecialCharacters, isMixedCase } = require('../index');
 
 describe('#validEmail', () => {
   it('returns true for valid emails', () => {
@@ -30,6 +28,7 @@ describe('#validEmail', () => {
       return validEmail(email).should.equal(false);
     });
   });
+  
 });
 
 describe('#validPassword', () => {
@@ -59,4 +58,31 @@ describe('#validPassword', () => {
       return validPassword(password).should.equal(false);
     });
   });
+});
+
+describe('#containsNumbers', () => {
+  it('returns false for strings without numbers', () => {
+    let stringsWithoutNumbers = [
+     'test@test.',
+     '@TEST.com',
+     'Test.com',
+     'test.Pers  onet',
+     'test.fun@mysite...com',
+     'fun@fun',
+     '@test'
+    ];
+    stringsWithoutNumbers.forEach((email) => {
+      return containsNumbers(email).should.equal(false);
+    });
+  });
+
+ it('returns true for strings with numbers', () => {
+   let stringsWithNumbers = [
+    't2',
+    '(833) 132-3124',
+   ];
+   stringsWithNumbers.forEach((email) => {
+     return containsNumbers(email).should.equal(true);
+   });
+ });
 });
