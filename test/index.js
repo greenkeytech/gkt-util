@@ -52,7 +52,8 @@ describe('#validPassword', () => {
       '$()$()!{}%',
       'Password11',
       'password123!',
-      'PANTHEUSNH1234{'
+      'PANTHEUSNH1234{',
+      '12aoAO$('
     ];
     invalidPasswords.forEach((password) => {
       return validPassword(password).should.equal(false);

@@ -19,6 +19,7 @@ module.exports = {
     return numbers.test(password) 
       && capitalLetters.test(password) 
       && lowerCaseLetters.test(password) 
-      && specialCharacters.test(password);
+      && specialCharacters.test(password)
+      && password.length > 8;
   }
 }
