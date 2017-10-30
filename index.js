@@ -1,7 +1,16 @@
+/**
+ * A member function for strings to capitalize the first letter.
+ * Could possibly add to its own file which contains nothing
+ * but custom string functions.
+ */
+String.prototype.upperCaseFirst = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
 
+/**
+ * A general utility class for static methods used by front and backend code
+ */
 module.exports = class util {
-  constructor() {}
-
   /**
    * Checks for validity of email with regex.
    *
@@ -20,10 +29,19 @@ module.exports = class util {
    * @return {Boolean}
    */
   static validPassword(password) {
-    return util.containsNumbers(password) 
+    return util.containsNumbers(password)
       && util.isMixedCase(password)
       && util.containsSpecialCharacters(password)
       && password.length > 8;
+  }
+
+  static passwordError() {
+    return 'Password Must Contain both an uppercase / lowercase letter, number, and special character.';
+  }
+
+  static validUserName(username) {
+    const anyLetters = /[a-z]/i;
+    return anyLetters.test(username);
   }
 
   static containsNumbers(string) {
@@ -32,7 +50,7 @@ module.exports = class util {
   }
 
   static containsSpecialCharacters(string) {
-    let specialCharacters = /[\!\@\#\$\%\^\&\*\(\)\-\+\=\?\"\:\;\<\>\[\{\}\|\~\_\`\'\,\.\]]+/;
+    let specialCharacters = /[!@#$%^&*()\-+=?":;<>[{}|~_`',.\]]+/;
     return specialCharacters.test(string);
   }
 
@@ -49,4 +67,13 @@ module.exports = class util {
     let capitalLetters = /[A-Z]+/;
     return capitalLetters.test(string);
   }
-}
+
+  static isNaNValue(value) {
+    return +value != +value;
+  }
+
+  static isNotNaN (value) {
+    return !util.isNaNValue(value);
+  }
+
+};

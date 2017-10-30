@@ -1,5 +1,5 @@
 var should = require('chai').should();
-const { validEmail, validPassword, containsNumbers, containsSpecialCharacters, isMixedCase } = require('../index');
+const { validEmail, validPassword, validUserName, containsNumbers, containsSpecialCharacters, isMixedCase, isNotNaN, isNaNValue } = require('../index');
 
 describe('#validEmail', () => {
   it('returns true for valid emails', () => {
@@ -60,6 +60,30 @@ describe('#validPassword', () => {
   });
 });
 
+describe('#validUserName', () => {
+  it('returns true for valid usernames', () => {
+    let validUserNames = [
+      'fun120',
+      'GreenkeyIsGreat',
+      'tomSmith',
+      'asmith'
+    ];
+    validUserNames.forEach((userName) => {
+      return validUserName(userName).should.equal(true);
+    });
+  });
+
+  it('returns false for invalid usernames', () => {
+    let invalidUserNames = [
+      '123456',
+      '$()#&'
+    ];
+    invalidUserNames.forEach((userName) => {
+      return validUserName(userName).should.equal(false);
+    });
+  });
+});
+
 describe('#containsNumbers', () => {
   it('returns false for strings without numbers', () => {
     let stringsWithoutNumbers = [
@@ -85,4 +109,68 @@ describe('#containsNumbers', () => {
      return containsNumbers(email).should.equal(true);
    });
  });
+});
+
+describe('#upperCaseFirst', () => {
+  it('capitalizes banana', () => {
+    return 'banana'.upperCaseFirst().should.equal('Banana')
+  });
+
+  it('capitalizes banana fofana', () => {
+    return 'banana fofana'.upperCaseFirst().should.equal('Banana fofana')
+  });
+});
+
+describe('#isNaNValue', () => {
+  it('returns true for NaN', () => {
+    let NaNs = [
+      'password',
+      '1000b',
+      'Password11',
+      'password123!',
+      'PANTHEUSNH1234{'
+    ];
+    NaNs.forEach((NaNValue) => {
+      return isNaNValue(NaNValue).should.equal(true);
+    });
+  });
+
+  it('returns false for not NaN', () => {
+    let notNaNs = [
+      '30',
+      '1000',
+      134,
+      5634.123
+    ];
+    notNaNs.forEach((notNaN) => {
+      return isNaNValue(notNaN).should.equal(false);
+    });
+  });
+});
+
+describe('#isNotNaN', () => {
+  it('returns false for NaN', () => {
+    let notNaNs = [
+      '30',
+      '1000',
+      134,
+      5634.123
+    ];
+    notNaNs.forEach((notNaN) => {
+      return isNotNaN(NaN).should.equal(false);
+    });
+  });
+
+  it('returns false for values other than NaN', () => {
+    let NaNs = [
+      'password',
+      '1000b',
+      'Password11',
+      'password123!',
+      'PANTHEUSNH1234{'
+    ];
+    NaNs.forEach((NaNValue) => {
+      return isNotNaN(NaNValue).should.equal(false);
+    });
+  });
 });
