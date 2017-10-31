@@ -48,6 +48,7 @@ describe('#validPassword', () => {
     let invalidPasswords = [
       'password',
       '1000',
+      'aoeu',
       '$()$()!{}%',
       'Password11',
       'password123!',
@@ -121,54 +122,39 @@ describe('#upperCaseFirst', () => {
   });
 });
 
-describe('#isNaNValue', () => {
-  it('returns true for NaN', () => {
-    let NaNs = [
-      'password',
-      '1000b',
-      'Password11',
-      'password123!',
-      'PANTHEUSNH1234{'
-    ];
+describe('#isNaNValue & #isNotNaN', () => {
+  let NaNs = [
+    'password',
+    '1000b',
+    'Password11',
+    'password123!',
+    'PANTHEUSNH1234{'
+  ];
+  let notNaNs = [
+    '30',
+    '1000',
+    134,
+    5634.123
+  ];
+  it('isNaNValue returns true for NaN', () => {
     NaNs.forEach((NaNValue) => {
       return isNaNValue(NaNValue).should.equal(true);
     });
   });
 
-  it('returns false for not NaN', () => {
-    let notNaNs = [
-      '30',
-      '1000',
-      134,
-      5634.123
-    ];
+  it('isNaNValue returns false for not NaN', () => {
     notNaNs.forEach((notNaN) => {
       return isNaNValue(notNaN).should.equal(false);
     });
   });
-});
 
-describe('#isNotNaN', () => {
-  it('returns false for NaN', () => {
-    let notNaNs = [
-      '30',
-      '1000',
-      134,
-      5634.123
-    ];
+  it('isNotNaN returns false for NaN', () => {
     notNaNs.forEach((notNaN) => {
       return isNotNaN(NaN).should.equal(false);
     });
   });
 
-  it('returns false for values other than NaN', () => {
-    let NaNs = [
-      'password',
-      '1000b',
-      'Password11',
-      'password123!',
-      'PANTHEUSNH1234{'
-    ];
+  it('isNotNaN returns false for values other than NaN', () => {
     NaNs.forEach((NaNValue) => {
       return isNotNaN(NaNValue).should.equal(false);
     });
