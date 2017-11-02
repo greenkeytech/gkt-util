@@ -6,11 +6,13 @@ A small library providing utility methods for Greenkey
 ## Installation
 
 **npm**: `npm install https://github.com/greenkeytech/gkt-util --save`
+
 **yarn**: `yarn add https://github.com/greenkeytech/gkt-util`.
 
 For development, you will need to install `mocha` globally for testing.
 
 **npm**: `npm install -g mocha`
+
 **yarn**: `yarn global add mocha`
 
 ## Usage
