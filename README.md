@@ -5,13 +5,13 @@ A small library providing utility methods for Greenkey
 
 ## Installation
 
-`npm install https://github.com/greenkeytech/gkt-util --save` or
-`yarn add https://github.com/greenkeytech/gkt-util`.
+**npm**: `npm install https://github.com/greenkeytech/gkt-util --save`
+**yarn**: `yarn add https://github.com/greenkeytech/gkt-util`.
 
-To develop, you will need to install Mocha for testing. Highly recommend test-driven development for this library as it's very simple to do.
+For development, you will need to install `mocha` globally for testing.
 
-`npm install -g mocha` or
-`yarn global add mocha`
+**npm**: `npm install -g mocha`
+**yarn**: `yarn global add mocha`
 
 ## Usage
 
@@ -27,7 +27,8 @@ validEmail('gkt@greenkeytech.com');
 
 `npm test` is a shorthand for calling `mocha`. Recommended setup is a test-build within ur editor that you can call to check if ur tests pass.
 
-*Sublime Build Setup*
+**Sublime Build Setup**
+
 `Tools -> Build System -> New Build System` will open a new file. Copy paste this in:
 
 ```
@@ -37,7 +38,9 @@ validEmail('gkt@greenkeytech.com');
 }
 ```
 
-Then set your build system for this repo by `Tools-> Build System -> Mocha`. You can now press `Command or Ctrl + B` to run tests! Other editors should have similar options, PR to show this steps on different editors/IDE is encouraged.
+Then set your build system for this repo by `Tools-> Build System -> Mocha`. You can now press `Command or Ctrl + B` to run tests with the results outputting on the editor console!
+
+Other editors should have similar options, PR to show this steps on different editors/IDE is encouraged.
 
 ## Contributing
 
