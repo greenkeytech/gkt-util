@@ -1,15 +1,18 @@
 {
-  "name": "@greenkey/util",
+  "name": "gkt-util",
   "version": "0.1.01",
-  "description": "this is a test",
+  "description": "utility functions shared by codebases of GreenKey Technologies",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
-  "author": "Ashley Shultz <ashley@greenkeytech.com>",
+  "author": "GreenKey",
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^4.0.1"
+  },
+  "dependencies": {
+    "libphonenumber-js": "^0.4.38"
   }
 }
