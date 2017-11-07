@@ -29,10 +29,6 @@ module.exports = class GktUtil {
       && password.length > 8;
   }
 
-  static passwordError() {
-    return 'Password Must Contain both an uppercase / lowercase letter, number, and special character.';
-  }
-
   static validUserName(username) {
     const anyLetters = /[a-z]/i;
     return anyLetters.test(username);
@@ -73,6 +69,15 @@ module.exports = class GktUtil {
   /**
     Phone number methods
   */
+  static getPhoneCode(country) {
+    return getPhoneCode(country);
+  }
+
+  static getCountryCode(number) {
+    const metadata = new asYouType().metadata;
+    return metadata.country_phone_code_to_countries[number][0];
+  }
+
   static isValidNumber(number, country) {
     return typeof country === 'string' ? isValidNumber(number, country) : isValidNumber(number);
   }

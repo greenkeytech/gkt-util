@@ -46,7 +46,11 @@ Other editors should have similar options, PR to show this steps on different ed
 
 ## Contributing
 
-In lieu of a formal styleguide, take care to maintain the existing coding style. Again, test-driven development is encouraged - write your tests, then the function.
+**Release**
+
+Devs will pull the latest version that is Released via github. To update a version, submit a PR that gets approved into a branch. Then, go to the github repository website, click on `release` link between the `branches` and `contribtors`, click `Draft a new release`, release the branch your PR was submitted to.
+
+We code using `airBnB` styleguide. Point your linters there. Again, test-driven development is encouraged - write your tests, then the function.
 
 ## Release History
 
