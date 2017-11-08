@@ -1,6 +1,6 @@
 {
   "name": "gkt-util",
-  "version": "0.1.03",
+  "version": "0.1.3",
   "description": "utility functions shared by codebases of GreenKey Technologies",
   "main": "index.js",
   "scripts": {
