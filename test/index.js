@@ -1,8 +1,47 @@
 const should = require('chai').should();
 const { expect } = require('chai');
-const { validEmail, validPassword, validUserName,
-  containsNumbers, containsSpecialCharacters, isMixedCase,
-  isNotNaN, isNaNValue, isValidNumber } = require('../index');
+const { validEmail, validPassword, validUserName, containsNumbers, containsSpecialCharacters, isMixedCase, isValidNumber, numberFormat, getPhoneCode, getCountryCode } = require('../index');
+
+const validInternationalNumbersAnswerKey = {
+  '+12246269999' : {'International': '+1 224 626 9999', 'International_plaintext': '+12246269999', 'National': '(224) 626-9999'},
+  '+1 224-242-8346' : {'International': '+1 224 242 8346', 'International_plaintext': '+12242428346', 'National': '(224) 242-8346'},
+  '+44 844 335 1801': {'International': '+44 844 335 1801', 'International_plaintext': '+448443351801', 'National': '0844 335 1801'},
+  '+525524822400' : {'International': '+52 55 2482 2400', 'International_plaintext': '+525524822400', 'National': '55 2482 2400'},
+  '+52 1 55 1234 2123' : {'International': '+52 1 55 1234 2123', 'International_plaintext': '+5215512342123', 'National': '044 55 1234 2123'},
+  '+52 01 55 1234 2123' : {'International': '+52 55 1234 2123', 'International_plaintext': '+525512342123', 'National': '55 1234 2123'},
+  '+52 011 55 1234 2123' : {'International': '+52 1 55 1234 2123', 'International_plaintext': '+5215512342123', 'National': '044 55 1234 2123'},
+  '+52 044 55 1234 2123' : {'International': '+52 1 55 1234 2123', 'International_plaintext': '+5215512342123', 'National': '044 55 1234 2123'},
+  '+52 045 55 1234 2123' : {'International': '+52 1 55 1234 2123', 'International_plaintext': '+5215512342123', 'National': '044 55 1234 2123'},
+}
+
+const validInternationalNumbers = Object.keys(validInternationalNumbersAnswerKey);
+
+const validCountryNumbers = [
+  { phone: '(213) 373-4253', country: 'US' },
+  { phone: '1 213 373 4253', country: 'US' },
+  { phone: '2133734253', country: 'US' },
+  { phone: '55 2482 2400', country: 'MX' },
+  { phone: '+52 55 2482 2400', country: 'MX' },
+  { phone: '+52 1 55 2482 2400', country: 'MX' },
+  { phone: '+52 01 55 2482 2400', country: 'MX' },
+  { phone: '+52 011 55 2482 2400', country: 'MX' },
+];
+
+const invalidNumbers = [
+  '',
+  {},
+  null,
+  false,
+  true,
+  12246169999,
+  'word',
+  'wordwithvalidnumber+12246269999',
+  '+1 800 GOT MILK',
+  '+1 111 111 1111', // invalid area code
+  '+1 224 616 999', // invalid length
+  '+52 041 55 1234 2123', // 041 is an invalid prefix
+  '1 224 616 9999', // without +1 denoting international, invalid length
+];
 
 describe('#validEmail', () => {
   it('returns true for valid emails', () => {
@@ -115,85 +154,7 @@ describe('#containsNumbers', () => {
  });
 });
 
-describe('#isNaNValue & #isNotNaN', () => {
-  let NaNs = [
-    'password',
-    '1000b',
-    'Password11',
-    'password123!',
-    'PANTHEUSNH1234{'
-  ];
-  let notNaNs = [
-    '30',
-    '1000',
-    134,
-    5634.123
-  ];
-  it('isNaNValue returns true for NaN', () => {
-    NaNs.forEach((NaNValue) => {
-      return isNaNValue(NaNValue).should.equal(true);
-    });
-  });
-
-  it('isNaNValue returns false for not NaN', () => {
-    notNaNs.forEach((notNaN) => {
-      return isNaNValue(notNaN).should.equal(false);
-    });
-  });
-
-  it('isNotNaN returns false for NaN', () => {
-    notNaNs.forEach((notNaN) => {
-      return isNotNaN(NaN).should.equal(false);
-    });
-  });
-
-  it('isNotNaN returns false for values other than NaN', () => {
-    NaNs.forEach((NaNValue) => {
-      return isNotNaN(NaNValue).should.equal(false);
-    });
-  });
-});
-
 describe('#isValidNumber', () => {
-  const validInternationalNumbers = [
-    '+12246269999',
-    '+1 224-242-8346',
-    '+44 844 335 1801',
-    '+525524822400',
-    '+52 1 55 1234 2123',
-    '+52 01 55 1234 2123',
-    '+52 011 55 1234 2123',
-    '+52 044 55 1234 2123',
-    '+52 045 55 1234 2123',
-  ];
-
-  const validCountryNumbers = [
-    { phone: '(213) 373-4253', country: 'US' },
-    { phone: '1 213 373 4253', country: 'US' },
-    { phone: '2133734253', country: 'US' },
-    { phone: '55 2482 2400', country: 'MX' },
-    { phone: '+52 55 2482 2400', country: 'MX' },
-    { phone: '+52 1 55 2482 2400', country: 'MX' },
-    { phone: '+52 01 55 2482 2400', country: 'MX' },
-    { phone: '+52 011 55 2482 2400', country: 'MX' },
-  ];
-
-  const invalidNumbers = [
-    '',
-    {},
-    null,
-    false,
-    true,
-    12246169999,
-    'word',
-    'wordwithvalidnumber+12246269999',
-    '+1 800 GOT MILK',
-    '+1 111 111 1111', // invalid area code
-    '+1 224 616 999', // invalid length
-    '+52 041 55 1234 2123', // 041 is an invalid prefix
-    '1 224 616 9999', // without +1 denoting international, invalid length
-  ];
-
   it('should return true for valid E.164-format numbers', () => {
     validInternationalNumbers.forEach((num) => {
       return isValidNumber(num).should.equal(true);
@@ -213,6 +174,29 @@ describe('#isValidNumber', () => {
       return expect(isValidNumber(el),
         `when calling isValidNumber with invalid element ${el} [index ${i}]`)
         .to.equal(false);
+    });
+  });
+});
+
+describe('#numberFormat', () => {
+  it('should correctly format valid E.164-format numbers to different formats', () => {
+
+    validInternationalNumbers.forEach((num, i) => {
+      return expect(numberFormat(num, 'International'),
+        `when calling numberFormat to International with valid number:${num} [index ${i}]`)
+        .to.equal(validInternationalNumbersAnswerKey[num]['International']);
+    });
+
+    validInternationalNumbers.forEach((num, i) => {
+      return expect(numberFormat(num, 'International_plaintext'),
+        `when calling numberFormat to International_plaintext with valid number:${num} [index ${i}]`)
+        .to.equal(validInternationalNumbersAnswerKey[num]['International_plaintext']);
+    });
+
+    validInternationalNumbers.forEach((num, i) => {
+      return expect(numberFormat(num, 'National'),
+        `when calling numberFormat to National with valid number:${num} [index ${i}]`)
+        .to.equal(validInternationalNumbersAnswerKey[num]['National']);
     });
   });
 });

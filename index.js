@@ -58,24 +58,24 @@ module.exports = class GktUtil {
     return capitalLetters.test(string);
   }
 
-  static isNaNValue(value) {
-    return +value != +value;
-  }
-
-  static isNotNaN(value) {
-    return !GktUtil.isNaNValue(value);
-  }
-
   /**
     Phone number methods
   */
   static getPhoneCode(country) {
-    return getPhoneCode(country);
+    // behavior for unrecognized country in the library is to crash
+    try {
+      return getPhoneCode(country);
+    }
+    catch(e) {
+      return false;
+    }
   }
 
   static getCountryCode(number) {
     const metadata = new asYouType().metadata;
-    return metadata.country_phone_code_to_countries[number][0];
+
+    let country = metadata.country_phone_code_to_countries[number];
+    return Array.isArray(country) ? country[0] : false;
   }
 
   static isValidNumber(number, country) {
@@ -86,10 +86,10 @@ module.exports = class GktUtil {
     const isInternationalFormat = number.charAt(0) === '+';
 
     if (isInternationalFormat || !country) {
-      return new phone.asYouType().input(number);
+      return new asYouType().input(number);
     }
 
-    return new phone.asYouType(country).input(number);
+    return new asYouType(country).input(number);
   }
 
   /**
